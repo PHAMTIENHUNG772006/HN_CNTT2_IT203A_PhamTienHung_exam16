@@ -35,10 +35,10 @@ public class Main {
             product.displayInfo();
         }
 
-        Comparator comparator = new Comparator() {
+        Comparator<Product> comparator = new Comparator<Product>() {
             @Override
-            public int compare(Object o1, Object o2) {
-                return 0;
+            public int compare(Product p1, Product p2) {
+                return Double.compare(p1.getPrice(), p2.getPrice());
             }
         };
         products.sort(comparator);
@@ -50,15 +50,11 @@ public class Main {
         Map<String,Integer> maps = new HashMap<>();
 
         for (Product product : products) {
-            if (maps.containsKey(product)) {
-                maps.put(product.getId(), maps.get(product) + 1);
-            } else {
-                maps.put(product.getId(), 1);
-            }
+            maps.put(product.getId(), maps.getOrDefault(product.getId(), 0) + 1);
         }
 
 
-        System.out.println("Output (đã sắp xếp):");
+        System.out.println("Danh sách số lượng:");
         for (Map.Entry<String, Integer> entry : maps.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue() );
         }
